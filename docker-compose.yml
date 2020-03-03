@@ -33,9 +33,12 @@ services:
                 parallelism: 3
                 delay: 10s
         ports: 
-            - 8081:8080
+            - 8080
         networks: 
             - balance
+        depends_on: 
+            - mongo
+
     proxy:
         build: ./nginx/
         ports: 
