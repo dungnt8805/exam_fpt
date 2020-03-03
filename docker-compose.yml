@@ -19,13 +19,13 @@ services:
             - 8081:8081
         networks: 
             - balance
-        environment:
-            ME_CONFIG_MONGODB_ADMINUSERNAME: root
-            ME_CONFIG_MONGODB_ADMINPASSWORD: example
+        # environment:
+        #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+        #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
     api:
         build: ./
         deploy:
-            replicas: 15
+            replicas: 60
             restart_policy:
                 max_attempts: 3
                 condition: on-failure
@@ -33,7 +33,7 @@ services:
                 parallelism: 3
                 delay: 10s
         ports: 
-            - 8080
+            - 8080:8080
         networks: 
             - balance
         depends_on: 
@@ -47,10 +47,10 @@ services:
             - api
         networks: 
             - balance
-        # deploy:
-        #     resources:
-        #         limits:
-        #             cpus: '0.25'
-        #             memory: 200M
-        #         reservations:
-        #             memory: 100M
+        deploy:
+            resources:
+                limits:
+                    cpus: '40'
+                    memory: 500M
+                reservations:
+                    memory: 100M
